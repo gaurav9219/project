@@ -15,6 +15,13 @@ import UserProfile from './pages/UserProfile';
 import ExploreQuizzes from './pages/ExploreQuizzes';
 import QuizTournament from './pages/QuizTournament';
 import Leaderboard from './pages/Leaderboard';
+import QuizCreatorTips from './pages/QuizCreatorTips';
+import QuizDiscussions from './pages/QuizDiscussions';
+import CreateQuiz from './pages/CreateQuiz';
+import AIQuizGenerator from './pages/AIQuizGenerator';
+import AffiliatePage from './pages/AffiliatePage';
+import PricingPlan from './pages/PricingPlan';
+import Support from './pages/Support';
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -51,14 +58,15 @@ function App() {
               <Route path="/quiz-tournament" element={<QuizTournament isDarkMode={isDarkMode} />} />
               <Route path="/leaderboard" element={<Leaderboard isDarkMode={isDarkMode} />} />
               
-              {/* Placeholder routes for remaining pages */}
-              <Route path="/quiz-creator-tips" element={<div className="text-center py-20"><h1 className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Quiz Creator Tips - Coming Soon</h1></div>} />
-              <Route path="/quiz-discussions" element={<div className="text-center py-20"><h1 className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Quiz Discussions - Coming Soon</h1></div>} />
-              <Route path="/create-quiz" element={<div className="text-center py-20"><h1 className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Create Quiz - Coming Soon</h1></div>} />
-              <Route path="/ai-quiz-generator" element={<div className="text-center py-20"><h1 className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>AI Quiz Generator - Coming Soon</h1></div>} />
-              <Route path="/affiliate-page" element={<div className="text-center py-20"><h1 className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Affiliate Page - Coming Soon</h1></div>} />
-              <Route path="/pricing-plan" element={<div className="text-center py-20"><h1 className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Pricing Plan - Coming Soon</h1></div>} />
-              <Route path="/support" element={<div className="text-center py-20"><h1 className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Support - Coming Soon</h1></div>} />
+              {/* New Pages */}
+              <Route path="/quiz-creator-tips" element={<QuizCreatorTips isDarkMode={isDarkMode} />} />
+              <Route path="/quiz-discussions" element={<QuizDiscussions isDarkMode={isDarkMode} />} />
+              <Route path="/create-quiz" element={<CreateQuiz isDarkMode={isDarkMode} />} />
+              <Route path="/ai-quiz-generator" element={<AIQuizGenerator isDarkMode={isDarkMode} />} />
+              <Route path="/affiliate-page" element={<AffiliatePage isDarkMode={isDarkMode} />} />
+              <Route path="/pricing-plan" element={<PricingPlan isDarkMode={isDarkMode} />} />
+              <Route path="/support" element={<Support isDarkMode={isDarkMode} />} />
+              
               <Route path="/logout" element={<div className="text-center py-20"><h1 className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Logout - Coming Soon</h1></div>} />
             </Routes>
           </main>
