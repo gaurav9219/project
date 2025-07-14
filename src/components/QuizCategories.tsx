@@ -8,6 +8,7 @@ interface QuizCategoriesProps {
 
 const QuizCategories: React.FC<QuizCategoriesProps> = ({ isDarkMode }) => {
   const [currentSlide, setCurrentSlide] = React.useState(0);
+  const [isPaused, setIsPaused] = React.useState(false);
   
   const categories = [
     {
@@ -131,6 +132,17 @@ const QuizCategories: React.FC<QuizCategoriesProps> = ({ isDarkMode }) => {
     setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
   };
 
+  // Auto-play functionality
+  React.useEffect(() => {
+    if (!isPaused) {
+      const interval = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % totalSlides);
+      }, 4000); // Change slide every 4 seconds
+
+      return () => clearInterval(interval);
+    }
+  }, [totalSlides, isPaused]);
+
   const getCurrentItems = () => {
     const start = currentSlide * itemsPerSlide;
     return categories.slice(start, start + itemsPerSlide);
@@ -158,7 +170,11 @@ const QuizCategories: React.FC<QuizCategoriesProps> = ({ isDarkMode }) => {
         </div>
       </div>
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+      <div 
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
         {getCurrentItems().map((category, index) => (
           <CategoryCard
             key={index}

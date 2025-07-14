@@ -8,6 +8,7 @@ interface QuizzesByDifficultyProps {
 const QuizzesByDifficulty: React.FC<QuizzesByDifficultyProps> = ({ isDarkMode }) => {
   const [selectedDifficulty, setSelectedDifficulty] = useState('All');
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
   
   const difficulties = ['All', 'Easy', 'Medium', 'Hard', 'Expert'];
   
@@ -107,6 +108,17 @@ const QuizzesByDifficulty: React.FC<QuizzesByDifficultyProps> = ({ isDarkMode })
     setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
   };
 
+  // Auto-play functionality
+  React.useEffect(() => {
+    if (!isPaused) {
+      const interval = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % totalSlides);
+      }, 6000); // Change slide every 6 seconds
+
+      return () => clearInterval(interval);
+    }
+  }, [totalSlides, isPaused]);
+
   const getCurrentItems = () => {
     const start = currentSlide * itemsPerSlide;
     return filteredQuizzes.slice(start, start + itemsPerSlide);
@@ -170,7 +182,11 @@ const QuizzesByDifficulty: React.FC<QuizzesByDifficultyProps> = ({ isDarkMode })
       </div>
 
       {/* Quiz Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div 
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
         {getCurrentItems().map((quiz) => (
           <div key={quiz.id} className={`${isDarkMode ? 'bg-slate-800' : 'bg-white border border-gray-200'} rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 hover:shadow-2xl group cursor-pointer`}>
             {/* Quiz Image */}

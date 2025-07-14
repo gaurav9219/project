@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react';
 
 const SuccessStories = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
   
   const testimonials = [
     {
@@ -48,6 +49,17 @@ const SuccessStories = () => {
     setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
 
+  // Auto-play functionality
+  React.useEffect(() => {
+    if (!isPaused) {
+      const interval = setInterval(() => {
+        setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
+      }, 7000); // Change testimonial every 7 seconds
+
+      return () => clearInterval(interval);
+    }
+  }, [testimonials.length, isPaused]);
+
   const current = testimonials[currentTestimonial];
 
   return (
@@ -60,7 +72,11 @@ const SuccessStories = () => {
       </div>
 
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
+        <div 
+          className="flex items-center justify-between"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
           {/* Navigation Button - Left */}
           <button className="hidden sm:block p-3 bg-slate-700 hover:bg-slate-600 text-white rounded-full transition-colors z-10">
             <ChevronLeft className="w-6 h-6" />

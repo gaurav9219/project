@@ -7,6 +7,7 @@ interface ReferralAndTipsProps {
 
 const ReferralAndTips: React.FC<ReferralAndTipsProps> = ({ isDarkMode }) => {
   const [currentSlide, setCurrentSlide] = React.useState(0);
+  const [isPaused, setIsPaused] = React.useState(false);
   
   const tips = [
     {
@@ -45,6 +46,17 @@ const ReferralAndTips: React.FC<ReferralAndTipsProps> = ({ isDarkMode }) => {
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
   };
+
+  // Auto-play functionality
+  React.useEffect(() => {
+    if (!isPaused) {
+      const interval = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % totalSlides);
+      }, 5000); // Change slide every 5 seconds
+
+      return () => clearInterval(interval);
+    }
+  }, [totalSlides, isPaused]);
 
   const getCurrentItems = () => {
     const start = currentSlide * itemsPerSlide;
@@ -121,7 +133,11 @@ const ReferralAndTips: React.FC<ReferralAndTipsProps> = ({ isDarkMode }) => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div 
+            className="grid grid-cols-1 md:grid-cols-3 gap-6"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+          >
             {getCurrentItems().map((tip) => (
               <div key={tip.id} className={`${isDarkMode ? 'bg-slate-800 hover:bg-slate-750' : 'bg-white hover:bg-gray-50 border border-gray-200'} rounded-xl p-6 transition-colors cursor-pointer group`}>
                 <div className={`w-12 h-12 ${tip.bgColor} rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>

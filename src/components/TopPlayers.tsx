@@ -7,6 +7,7 @@ interface TopPlayersProps {
 
 const TopPlayers: React.FC<TopPlayersProps> = ({ isDarkMode }) => {
   const [currentSlide, setCurrentSlide] = React.useState(0);
+  const [isPaused, setIsPaused] = React.useState(false);
   
   const topPlayers = [
     {
@@ -202,6 +203,17 @@ const TopPlayers: React.FC<TopPlayersProps> = ({ isDarkMode }) => {
     setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
   };
 
+  // Auto-play functionality
+  React.useEffect(() => {
+    if (!isPaused) {
+      const interval = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % totalSlides);
+      }, 5000); // Change slide every 5 seconds
+
+      return () => clearInterval(interval);
+    }
+  }, [totalSlides, isPaused]);
+
   const getCurrentItems = () => {
     const start = currentSlide * itemsPerSlide;
     return topPlayers.slice(start, start + itemsPerSlide);
@@ -232,7 +244,11 @@ const TopPlayers: React.FC<TopPlayersProps> = ({ isDarkMode }) => {
         </div>
       </div>
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-6">
+      <div 
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-6"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
         {getCurrentItems().map((player) => (
           <div key={player.id} className={`${isDarkMode ? 'bg-slate-800' : 'bg-white border border-gray-200'} rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 hover:shadow-2xl group cursor-pointer`}>
             {/* Header with gradient background */}
