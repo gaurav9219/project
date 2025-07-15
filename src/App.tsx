@@ -22,6 +22,7 @@ import AIQuizGenerator from './pages/AIQuizGenerator';
 import AffiliatePage from './pages/AffiliatePage';
 import PricingPlan from './pages/PricingPlan';
 import Support from './pages/Support';
+import AdminDashboard from './pages/AdminDashboard';
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -66,6 +67,7 @@ function App() {
               <Route path="/affiliate-page" element={<AffiliatePage isDarkMode={isDarkMode} />} />
               <Route path="/pricing-plan" element={<PricingPlan isDarkMode={isDarkMode} />} />
               <Route path="/support" element={<Support isDarkMode={isDarkMode} />} />
+              <Route path="/admin" element={<AdminDashboard isDarkMode={isDarkMode} />} />
               
               <Route path="/logout" element={<div className="text-center py-20"><h1 className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Logout - Coming Soon</h1></div>} />
             </Routes>

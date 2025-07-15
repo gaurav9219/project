@@ -17,7 +17,8 @@ import {
   CreditCard,
   HelpCircle,
   LogOut,
-  User
+  User,
+  Shield
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -47,6 +48,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isDarkMode, isOpen, onClose }) => {
     { icon: Link, label: 'Affiliate Page', path: '/affiliate-page' },
     { icon: CreditCard, label: 'Pricing Plan', path: '/pricing-plan' },
     { icon: HelpCircle, label: 'Support', path: '/support' },
+    { icon: Shield, label: 'Admin Dashboard', path: '/admin' },
     { icon: LogOut, label: 'Logout', path: '/logout' },
   ];
 
